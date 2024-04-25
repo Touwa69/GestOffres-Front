@@ -1,0 +1,39 @@
+<div class="container">
+    <div>
+    <h2>Modifier un Produit :</h2>
+    </div>
+    <form >
+    <div class="col-sm-2 col-md-2 col-lg-2">
+    <label >ID User</label>
+    <input type="number" [(ngModel)]="currentUser.idUser"
+    name="idUser" class="form-control">
+    </div>
+    <div class="col-sm-4 col-md-4 col-lg-4" >
+    <label >Username</label>
+    <input type="text"[(ngModel)]= "currentUser.username" name="username" class="form-control">
+    </div>
+    <div class="col-sm-2 col-md-2 col-lg-2">
+    <label >Password</label>
+    <input type="text" [(ngModel)]= "currentUser.password"
+    name="password" class="form-control">
+    </div>
+    <div class="col-sm-2 col-md-2 col-lg-2">
+        <label >Email</label>
+        <input type="text" [(ngModel)]= "currentUser.email"
+        name="email" class="form-control">
+    </div>
+    <div class="col-sm-2 col-md-2 col-lg-2">
+        <label >Societe</label>
+        <input type="text" [(ngModel)]= "currentUser.societe"
+        name="societe" class="form-control">
+        </div>
+    <div class="col-sm-2 col-md-2 col-lg-2">
+        <label >Roles</label>
+        <input type="text" [(ngModel)]= "currentUser.roles"
+        name="roles" class="form-control">
+    </div>
+<div class="mt-2">
+<button type="submit" (click)="updateUser()" class="btn btn-success">Modifer</button>
+</div>
+</form>
+</div>
