@@ -2,6 +2,12 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { User } from '../model/user.model';
+import { AuthService } from './auth.service';
+import { authApiURL } from '../config';
+
+const httpOptions = {
+  headers: new HttpHeaders( {'Content-Type': 'application/json'} )
+};
 
 
 @Injectable({
@@ -12,7 +18,7 @@ export class UserService {
   users! : User[];
   user! : User;
 
-  constructor() {
+  constructor(private http : HttpClient, private authService : AuthService) {
 
     this.users = [
       {idUser : 1, username: "TouwaAbb", password:"123", email : "touwa@gmail.com", societe : "sasLab", roles:['ADMIN'], dateCreationCpt : new Date("2024/04/23")},
@@ -26,9 +32,16 @@ export class UserService {
     return this.users;
   }
 
-  ajouterUser(user : User){
+  /* ajouterUser(user : User){
     this.users.push(user);
-  }
+  } */
+
+  ajouterUser( user: User):Observable<User>{
+    let jwt = this.authService.getToken();
+    jwt = "Bearer "+jwt;
+    let httpHeaders = new HttpHeaders({"Authorization":jwt}) 
+      return this.http.post<User>(authApiURL+"/signup", user, {headers:httpHeaders});
+    }
 
   supprimerUser(user : User){
     const index = this.users.indexOf(user, 0);

@@ -15,6 +15,7 @@ import { SignUpComponent } from './sign-up/sign-up.component';
 
 import { RecaptchaModule } from 'ng-recaptcha';
 import { ProfileComponent } from './profile/profile.component';
+import { RechercheUsersComponent } from './recherche-users/recherche-users.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { ProfileComponent } from './profile/profile.component';
     AddUserComponent,
     UpdateUserComponent,
     SignUpComponent,
-    ProfileComponent
+    ProfileComponent,
+    RechercheUsersComponent
   ],
   imports: [
     BrowserModule,
