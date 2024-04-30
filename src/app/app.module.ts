@@ -16,6 +16,8 @@ import { SignUpComponent } from './sign-up/sign-up.component';
 import { RecaptchaModule } from 'ng-recaptcha';
 import { ProfileComponent } from './profile/profile.component';
 import { RechercheUsersComponent } from './recherche-users/recherche-users.component';
+import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
+import { TokenInterceptor } from './services/token.interceptor';
 
 @NgModule({
   declarations: [
@@ -35,9 +37,15 @@ import { RechercheUsersComponent } from './recherche-users/recherche-users.compo
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    RecaptchaModule
+    RecaptchaModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [
+    HttpClient,
+    { provide : HTTP_INTERCEPTORS,
+      useClass : TokenInterceptor,
+      multi : true}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
