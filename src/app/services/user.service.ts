@@ -43,6 +43,11 @@ export class UserService {
       return this.http.post<User>(authApiURL+"/signup", user, {headers:httpHeaders});
     }
 
+    signup(user: User): Observable<User> {
+      return this.http.post<User>(authApiURL+'/signup', user)
+    }
+  
+
   supprimerUser(user : User){
     const index = this.users.indexOf(user, 0);
     if(index > -1){
