@@ -15,21 +15,27 @@ const httpOptions = {
 })
 export class UserService {
 
+  private apiUrl = authApiURL+'/user';
+  
+
   users! : User[];
   user! : User;
 
   constructor(private http : HttpClient, private authService : AuthService) {
 
-    this.users = [
+  /*   this.users = [
       {idUser : 1, username: "TouwaAbb", password:"123", email : "touwa@gmail.com", societe : "sasLab", roles:['ADMIN'], dateCreationCpt : new Date("2024/04/23")},
       {idUser : 2, username: "Azer01", password:"123", email : "azer@gmail.com", societe : "sasLab", roles:['ADMIN'], dateCreationCpt : new Date("2024/04/23")},
       {idUser : 3, username: "Moha20", password:"123", email : "moha@gmail.com", societe : "sasLab", roles:['USER'], dateCreationCpt : new Date("2024/04/24")},
       
-    ];
+    ]; */
   }
 
-  listeUsers(): User[]{
+  /* listeUsers(): User[]{
     return this.users;
+  } */
+  listeUsers(): Observable<User[]> {
+    return this.http.get<User[]>(authApiURL+'/users');
   }
 
   /* ajouterUser(user : User){
@@ -48,16 +54,24 @@ export class UserService {
     }
   
 
-  supprimerUser(user : User){
-    const index = this.users.indexOf(user, 0);
-    if(index > -1){
-      this.users.splice(index, 1);
-    }
-  }
+//   supprimerUser(user : User){
+//    const index = this.users.indexOf(user, 0);
+//    if(index > -1){
+//      this.users.splice(index, 1);
+//    }
+//  } 
 
-  consulterUser(id: number){
+  supprimerUser(id : string):Observable<User> {
+    return this.http.delete<User>(`${authApiURL}/delete/${id}`);
+    }
+
+  consulterUser(id: string){
     this.user = this.users.find(usr => usr.idUser == id)!;
     return this.user;
+  }
+
+  getUserById(userId: string): Observable<User> {
+    return this.http.get<User>(`${this.apiUrl}/${userId}`);
   }
 
   trierUsers(){
@@ -72,10 +86,15 @@ export class UserService {
   }
 
   updateUser(usr: User){
-    this.supprimerUser(usr);
-    this.ajouterUser(usr);
-    this.trierUsers();
+    // this.supprimerUser(usr);
+    // this.ajouterUser(usr);
+    // this.trierUsers();
   }
+
+  rechercherParNom(nom: string):Observable< User[]> {
+    const url = `${authApiURL}/jouersByName/${nom}`;
+    return this.http.get<User[]>(url);
+    }
 
   // rechercherParNom(nom: string):Observable< User[]> {
   //   const url = `8081/userssByName/${nom}`;

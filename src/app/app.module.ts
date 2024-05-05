@@ -18,6 +18,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { RechercheUsersComponent } from './recherche-users/recherche-users.component';
 import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
 import { TokenInterceptor } from './services/token.interceptor';
+import { UserService } from './services/user.service';
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import { TokenInterceptor } from './services/token.interceptor';
   ],
   providers: [
     HttpClient,
+    UserService,
     { provide : HTTP_INTERCEPTORS,
       useClass : TokenInterceptor,
       multi : true}

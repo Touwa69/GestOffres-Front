@@ -16,7 +16,7 @@ export class AuthService {
   public loggedUser!:string;
 
   public isloggedIn: Boolean = false;
-  public roles!:string[];
+  public userRole!:string[];
 
   constructor(private router : Router, private http : HttpClient) { }
 
@@ -40,8 +40,8 @@ export class AuthService {
      if (this.token == undefined)
      return;
     const decodedToken = this.helper.decodeToken(this.token);
-    this.roles = decodedToken.roles;
-    console.log("roles "+this.roles);
+    this.userRole = decodedToken.roles;
+    console.log("userRole "+this.userRole);
     this.loggedUser = decodedToken.sub;
   }
 
@@ -51,7 +51,7 @@ export class AuthService {
 
   logout() {
     this.loggedUser = undefined!;
-    this.roles = undefined!;
+    this.userRole = undefined!;
     this.token= undefined!;
     this.isloggedIn = false;
     localStorage.removeItem('jwt');
@@ -68,10 +68,16 @@ export class AuthService {
 }
 
 isAdmin():Boolean{
-  if (!this.roles)
+  if (!this.userRole)
   return false;
-  return this.roles.indexOf('ADMIN') >=0;
+  return this.userRole.indexOf('ADMIN') >=0;
   }
+
+  isSuperAdmin():Boolean{
+    if (!this.userRole)
+    return false;
+    return this.userRole.indexOf('SUPERADMIN') >=0;
+    }
 
 setLoggedUserFromLocalStorage(login : string) {
   this.loggedUser = login;

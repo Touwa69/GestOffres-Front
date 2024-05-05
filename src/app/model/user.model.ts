@@ -1,9 +1,9 @@
 export class User{
-    idUser! : number;
-    username!:string ;
+    idUser! : string;
+    name!:string ;
     password !: string ;
     email ! : string;
     societe ! : string;
-    roles!:string[];
-    dateCreationCpt? : Date;
+    userRole!:string[];
+    creationDate? : Date;
     }

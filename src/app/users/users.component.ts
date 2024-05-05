@@ -10,11 +10,14 @@ import { UserService } from '../services/user.service';
 export class UsersComponent implements OnInit {
 
   users! : User[];
+  nomUser! :string;
+  allUsers! : User[];
+  searchTerm!: string;
 
    constructor(private userService : UserService){
-    this.users = userService.listeUsers();
+    // this.users = userService.listeUsers();
 
-  } 
+  }
   
  /* constructor(){
   this.users = [
@@ -25,19 +28,45 @@ export class UsersComponent implements OnInit {
   ];
  } */
 
-  ngOnInit(): void {}
-
-  
-
-  supprimerUser(usr: User){
-    //console.log(j);
-    let conf =confirm("Etes-vous sur ?");
-    if (conf)
-    this.userService.supprimerUser(usr);
+  ngOnInit(): void {
+    this.loadUsers();
   }
 
-  
+  loadUsers() {
+    this.userService.listeUsers()
+      .subscribe(
+        users => {
+          this.users = users;
+        },
+        error => {
+          console.error('Error fetching users', error);
+          // Handle error, display error message to the user
+        }
+      );
+  }
 
-  
+  onKeyUp(filterText : string){
+    this.users = this.allUsers.filter(item =>
+    item.name?.toLowerCase().includes(filterText));
+    }
+
+    rechercherUsers(){
+      this.userService.rechercherParNom(this.nomUser).
+        subscribe(users => {
+      this.users = users; 
+      console.log(users)});
+    }
+
+
+  supprimerUser(id: string): void{
+    console.log(id);
+    let conf =confirm("Etes-vous sur ?");
+    if (conf)
+    this.userService.supprimerUser(id).subscribe(() => {
+  this.loadUsers();
+    }, (error) => {
+      console.error('Error deleting user', error);
+    });
+  }
 
 }

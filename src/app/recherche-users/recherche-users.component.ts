@@ -28,7 +28,7 @@ export class RechercheUsersComponent implements OnInit {
 
   onKeyUp(filterText : string){
     this.users = this.allUsers.filter(item =>
-    item.username?.toLowerCase().includes(filterText));
+    item.name?.toLowerCase().includes(filterText));
     }
 
   /* rechercherJouers(){

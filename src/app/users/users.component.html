@@ -1,20 +1,43 @@
-    <div class="form">
-        <a href="/addUser"><button> Ajouter un nouveau utilisateur </button></a>
+<div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <h1>Liste de utilisateurs</h1>
+      </div>
     </div>
+
+  <div id="users">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <input class="search form-control" placeholder="Search" #searchTerm (keyup)="onKeyUp(searchTerm.value)"/>
+          <a href="/addUser"><button class="sort btn btn-primary" data-sort="name">
+            Add User
+        </button>
+    </a>
+        </div>
+      </div>
+    </div>
+</div>
+
+
 <div class="container">
     <div class="card shadow mb-4">
     <div class="card-body">
     <table class="table table-striped">
-    <tr> <th>Id</th><th>Username</th> <th>societe</th> <th>Role</th><th>Date de création du compte</th></tr>
+    <tr><th></th> <th><h4>Username</h4></th><th><h4>Email</h4></th><th><h4>Societe</h4></th><th><h4>Date de création du compte</h4></th></tr>
     <tbody *ngFor="let user of users">
     <tr >
-    <td>{{user.idUser}}</td>
-    <td>{{user.username}}</td>
+    <!-- <td>{{user.idUser}}</td> -->
+    <td><img src="https://gravatar.com/avatar/ff3265b13420b9d301d0005ef494385a?s=80&d=https://codepen.io/assets/avatars/user-avatar-80x80-bdcd44a3bfb9a5fd01eb8b86f9e033fa1a9897c3a15b33adfc2649a002dab1b6.png" class="pull-left photo"></td>
+    <td>
+        <h5 class="list-group-item-heading name">{{user.name}} </h5>
+        <p class="list-group-item-text title"> {{user.userRole}} </p>
+    </td>
+    <td>{{user.email}}</td>
     <td>{{user.societe}}</td>
-    <td>{{user.roles}}</td>
-    <td>{{user.dateCreationCpt | date:'dd/MM/yyyy - HH:mm:ss' }}</td>
+    <td>{{user.creationDate | date:'dd/MM/yyyy - HH:mm:ss' }}</td>
     <td><a class="btn btn-success" [routerLink]="['/updateUser',user.idUser]">Modifier</a></td>
-    <td><a  class="btn btn-danger" (click)="supprimerUser(user)">Supprimer</a></td>
+    <td><a  class="btn btn-danger" (click)="supprimerUser(user.idUser)">Supprimer</a></td>
     </tr>
     </tbody>
     </table>
